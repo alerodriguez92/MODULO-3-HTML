@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "172287140679",
+    "project_id": "departamental-las-heras",
+    "storage_bucket": "departamental-las-heras.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172287140679:android:408f1d43c79510b63d6262",
+        "android_client_info": {
+          "package_name": "com.gestion.policia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBujSxHd8cDsqQK7CKarmW7Q6I4rhJKwQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
