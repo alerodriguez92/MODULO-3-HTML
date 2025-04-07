@@ -3,8 +3,18 @@
     "public": "web-build",
     "ignore": [
       "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+      "**/.*"
+    ],
+    "headers": [
+      {
+        "source": "**/*.ttf",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          }
+        ]
+      }
     ]
   }
 }
