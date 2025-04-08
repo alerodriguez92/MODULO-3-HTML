@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import {
-  useFonts as useGoogleFonts,
   SpaceMono_400Regular,
 } from "@expo-google-fonts/space-mono";
 
@@ -21,7 +20,6 @@ export const AdminContext = React.createContext();
 export default function App() {
   const [esAdmin, setEsAdmin] = useState(false);
 
-  // ✅ Carga de fuentes Google + íconos Expo
   const [fontsLoaded] = useFonts({
     ...Ionicons.font,
     ...MaterialIcons.font,
@@ -42,35 +40,53 @@ export default function App() {
         <Drawer.Navigator
           initialRouteName="Inicio"
           screenOptions={{
-            headerStyle: { backgroundColor: "#007bff" },
-            headerTintColor: "#fff",
+            headerShown: false,  // Ocultamos el header para HomeScreen
+            drawerType: 'front', // Muestra el menú con el icono hamburguesa
+            drawerStyle: {
+              backgroundColor: '#fff', // Fondo blanco
+            },
+            
           }}
         >
           <Drawer.Screen
             name="Inicio"
             component={HomeScreen}
-            options={{ drawerIcon: () => <Ionicons name="home-outline" size={20} /> }}
+            options={{
+              drawerIcon: () => <Ionicons name="menu-outline" size={30} />, // Icono de menú hamburguesa
+            }}
           />
           <Drawer.Screen
             name="Recursos Diarios"
             component={RecursosDiariosScreen}
-            options={{ drawerIcon: () => <Ionicons name="clipboard-outline" size={20} /> }}
+            options={{
+              drawerIcon: () => <Ionicons name="clipboard-outline" size={20} />,
+              headerShown: true,  // Mostramos el header en esta pantalla
+            }}
           />
           <Drawer.Screen
             name="Móviles en Servicio"
             component={MobileGuardScreen}
-            options={{ drawerIcon: () => <MaterialIcons name="local-police" size={20} /> }}
+            options={{
+              drawerIcon: () => <MaterialIcons name="local-police" size={20} />,
+              headerShown: true,  // Mostramos el header en esta pantalla
+            }}
           />
           <Drawer.Screen
             name="Modificar Capital Diario"
             component={ModificarCapitalDiarioScreen}
-            options={{ drawerIcon: () => <Ionicons name="create-outline" size={20} /> }}
+            options={{
+              drawerIcon: () => <Ionicons name="create-outline" size={20} />,
+              headerShown: true,  // Mostramos el header en esta pantalla
+            }}
           />
           {esAdmin && (
             <Drawer.Screen
               name="Consulta de Recursos"
               component={ConsultaRecursosScreen}
-              options={{ drawerIcon: () => <Ionicons name="search" size={20} /> }}
+              options={{
+                drawerIcon: () => <Ionicons name="search" size={20} />,
+                headerShown: true,  // Mostramos el header en esta pantalla
+              }}
             />
           )}
         </Drawer.Navigator>
@@ -78,4 +94,3 @@ export default function App() {
     </AdminContext.Provider>
   );
 }
-
