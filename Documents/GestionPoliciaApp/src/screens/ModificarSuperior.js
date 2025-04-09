@@ -51,6 +51,7 @@ export default function ModificarSuperior({ volver }) {
           horario,
         },
         modificado: true,
+        tipo: "superior",
       };
 
       await addDoc(collection(db, "modificaciones"), registro);

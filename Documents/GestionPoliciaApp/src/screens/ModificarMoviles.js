@@ -61,12 +61,13 @@ export default function ModificarMoviles({ volver }) {
     setGuardando(true);
     try {
       const usuario = getAuth().currentUser;
-      await addDoc(collection(db, "moviles"), {
+      await addDoc(collection(db, "modificaciones"), {
         dependencia: dependencia.toUpperCase(),
         moviles: movilesCargados,
         usuario: usuario?.email || "anónimo",
         fecha: new Date().toISOString(),
         modificado: true,
+        tipo: "moviles",
       });
 
       setDependencia("");

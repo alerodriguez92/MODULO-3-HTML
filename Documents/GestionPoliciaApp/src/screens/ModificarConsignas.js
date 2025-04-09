@@ -56,24 +56,27 @@ export default function ModificarConsignas({ volver }) {
       mostrarAlerta("Error", "Debés completar el campo de dependencia.");
       return;
     }
-
+  
     if (!cantidadConsignas.trim() || listaConsignas.some((c) => !c.trim())) {
       mostrarAlerta("Error", "Completá los domicilios de la cantidad numérica de consignas indicadas.");
       return;
     }
-
+  
     setGuardando(true);
     try {
       const auth = getAuth();
       const usuario = auth.currentUser;
+  
       const registro = {
         fecha: new Date().toISOString(),
         usuario: usuario?.email || "anónimo",
         dependencia: dependencia.toUpperCase(),
-        consignasCubiertas: listaConsignas.join("\n"),
+        // ✅ Guardado con numeración
+        consignasCubiertas: listaConsignas.map((c, i) => `${i + 1}. ${c}`).join("\n"),
         modificado: true,
+        tipo: "consignas",
       };
-
+  
       await addDoc(collection(db, "modificaciones"), registro);
       setGuardadoExitoso(true);
       setDependencia("");
@@ -87,7 +90,7 @@ export default function ModificarConsignas({ volver }) {
       setGuardando(false);
     }
   };
-
+  
   return (
     <View style={{ flex: 1, backgroundColor: "#f4f4f4" }}>
       <ScrollView contentContainerStyle={{ padding: 20 }}>
@@ -121,6 +124,14 @@ export default function ModificarConsignas({ volver }) {
             }}
           />
 
+{cantidadConsignas.trim() !== "" && (
+  <Text style={styles.resumenCantidad}>
+    🔢 Cantidad de consignas: {cantidadConsignas}
+  </Text>
+)}
+
+
+
           {listaConsignas.map((consigna, index) => (
             <View key={index} style={styles.itemConsigna}>
               {editandoIndex === index ? (
@@ -137,8 +148,10 @@ export default function ModificarConsignas({ volver }) {
                 </>
               ) : (
                 <>
-                  <Text style={{ flex: 1 }}>{consigna}</Text>
-                  <TouchableOpacity onPress={() => iniciarEdicion(index)} style={styles.botonAccionEditar}>
+<Text style={{ flex: 1 }}>{index + 1}. {consigna}</Text>
+
+
+<TouchableOpacity onPress={() => iniciarEdicion(index)} style={styles.botonAccionEditar}>
                     <Ionicons name="pencil" size={20} color="#fff" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => eliminarConsigna(index)} style={styles.botonAccionBorrar}>
@@ -252,4 +265,11 @@ const styles = StyleSheet.create({
     marginTop: 6,
     textAlign: "center",
   },
+  resumenCantidad: {
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#003366",
+    fontSize: 16,
+  },
+  
 });
